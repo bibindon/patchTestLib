@@ -392,6 +392,10 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 bShowMenu = true;
             }
+            else
+            {
+                bShowMenu = false;
+            }
             break;
         // メニューを表示している最中にメニューに表示されている内容を変える
         case VK_F2:

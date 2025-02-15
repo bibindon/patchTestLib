@@ -76,12 +76,12 @@ void NSPatchTestLib::PatchTestLib::MoveFromInventoryToStorehouse(const int id, c
                   {
                       if (left.GetSubId() < right.GetSubId())
                       {
-						  return true;
+                          return true;
                       }
                       //  left.GetSubId() >= right.GetSubId()
                       else
                       {
-						  return false;
+                          return false;
                       }
                   }
               });
@@ -120,12 +120,12 @@ void NSPatchTestLib::PatchTestLib::MoveFromStorehouseToInventory(const int id, c
                   {
                       if (left.GetSubId() < right.GetSubId())
                       {
-						  return true;
+                          return true;
                       }
-					  //  left.GetSubId() >= right.GetSubId()
+                      //  left.GetSubId() >= right.GetSubId()
                       else
                       {
-						  return false;
+                          return false;
                       }
                   }
               });
@@ -740,11 +740,11 @@ void PatchTestLib::Draw()
     // カーソルの表示
     if (m_eFocus == eFocus::LEFT)
     {
-        m_sprCursor->DrawImage(80, 205 + (m_leftCursor * 60));
+        m_sprCursor->DrawImage(80, 218 + (m_leftCursor * 60));
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
-        m_sprCursor->DrawImage(680, 205 + (m_rightCursor * 60));
+        m_sprCursor->DrawImage(680, 218 + (m_rightCursor * 60));
     }
 
 
