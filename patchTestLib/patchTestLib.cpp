@@ -658,10 +658,15 @@ void PatchTestLib::Draw()
     // 上部分の左に「インベントリ」、右側に「倉庫」と表示する
     m_font->DrawText_("食材リスト", 205, 110);
 
+    m_font->DrawText_("食材名", 155, 160, 64);
+
     m_font->DrawText_("パッチテストのリスト", 855, 110);
 
-    m_font->DrawText_("決定ボタンでパッチテストを依頼", 1085, 135);
-    m_font->DrawText_("一度に３回まで", 1085, 85);
+    m_font->DrawText_("食材名", 455, 160, 64);
+    m_font->DrawText_("依頼日", 655, 160, 64);
+    m_font->DrawText_("開始日", 855, 160, 64);
+    m_font->DrawText_("完了日", 1055, 160, 64);
+    m_font->DrawText_("判定結果", 1255, 160, 64);
 
     // 左の列のインベントリを表示
     if ((int)m_leftList.size() >= PANEL_ROW_MAX)
