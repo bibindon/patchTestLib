@@ -204,6 +204,7 @@ public:
     void CursorOn(const int x, const int y);
     std::string Click(const int x, const int y);
     void Draw();
+    void UpdateCursorPos();
 
     template <typename T>
     static void EraseRemove(std::vector<T>& vec, const T& value)

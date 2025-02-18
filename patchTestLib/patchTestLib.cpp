@@ -119,18 +119,19 @@ std::string PatchTestLib::Up()
         {
             m_leftSelect--;
             m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_leftCursor != 0)
-        {
-            m_leftCursor--;
-        }
-        else if (m_leftCursor == 0)
-        {
-            if (previousSelect != 0)
+
+            // カーソルが一番上にあるときに上ボタンを押されたら
+            // カーソルはそのままでリストが下に移動する
+            if (m_leftCursor != 0)
             {
-                m_leftBegin--;
+                m_leftCursor--;
+            }
+            else if (m_leftCursor == 0)
+            {
+                if (previousSelect != 0)
+                {
+                    m_leftBegin--;
+                }
             }
         }
     }
@@ -141,18 +142,19 @@ std::string PatchTestLib::Up()
         {
             m_rightSelect--;
             m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_rightCursor != 0)
-        {
-            m_rightCursor--;
-        }
-        else if (m_rightCursor == 0)
-        {
-            if (previousSelect != 0)
+
+            // カーソルが一番上にあるときに上ボタンを押されたら
+            // カーソルはそのままでリストが下に移動する
+            if (m_rightCursor != 0)
             {
-                m_rightBegin--;
+                m_rightCursor--;
+            }
+            else if (m_rightCursor == 0)
+            {
+                if (previousSelect != 0)
+                {
+                    m_rightBegin--;
+                }
             }
         }
     }
@@ -168,19 +170,19 @@ std::string PatchTestLib::Down()
         {
             m_leftSelect++;
             m_SE->PlayMove();
-        }
 
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_leftCursor != PANEL_ROW_MAX - 1)
-        {
-            m_leftCursor++;
-        }
-        else if (m_leftCursor == PANEL_ROW_MAX - 1)
-        {
-            if (previousSelect != (int)m_leftList.size() - 1)
+            // カーソルが一番下にあるときに下ボタンを押されたら
+            // カーソルはそのままでリストが上に移動する
+            if (m_leftCursor != PANEL_ROW_MAX - 1)
             {
-                m_leftBegin++;
+                m_leftCursor++;
+            }
+            else if (m_leftCursor == PANEL_ROW_MAX - 1)
+            {
+                if (previousSelect != (int)m_leftList.size() - 1)
+                {
+                    m_leftBegin++;
+                }
             }
         }
     }
@@ -191,19 +193,19 @@ std::string PatchTestLib::Down()
         {
             m_rightSelect++;
             m_SE->PlayMove();
-        }
 
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_rightCursor != PANEL_ROW_MAX - 1)
-        {
-            m_rightCursor++;
-        }
-        else if (m_rightCursor == PANEL_ROW_MAX - 1)
-        {
-            if (previousSelect != (int)m_rightList.size() - 1)
+            // カーソルが一番下にあるときに下ボタンを押されたら
+            // カーソルはそのままでリストが上に移動する
+            if (m_rightCursor != PANEL_ROW_MAX - 1)
             {
-                m_rightBegin++;
+                m_rightCursor++;
+            }
+            else if (m_rightCursor == PANEL_ROW_MAX - 1)
+            {
+                if (previousSelect != (int)m_rightList.size() - 1)
+                {
+                    m_rightBegin++;
+                }
             }
         }
     }
@@ -516,69 +518,73 @@ void PatchTestLib::CursorOn(const int x, const int y)
 std::string PatchTestLib::Click(const int x, const int y)
 {
     std::string result;
-    m_SE->PlayClick();
     if (m_eFocus == eFocus::LEFT)
     {
         if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
         {
+            int previousCursor = m_leftCursor;
+            int previousSelect = m_leftSelect;
+
             if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 1)
             {
                 m_leftCursor = 0;
                 m_leftSelect = 0 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 2)
             {
                 m_leftCursor = 1;
                 m_leftSelect = 1 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 3)
             {
                 m_leftCursor = 2;
                 m_leftSelect = 2 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 4)
             {
                 m_leftCursor = 3;
                 m_leftSelect = 3 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 5)
             {
                 m_leftCursor = 4;
                 m_leftSelect = 4 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 6)
             {
                 m_leftCursor = 5;
                 m_leftSelect = 5 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 7)
             {
                 m_leftCursor = 6;
                 m_leftSelect = 6 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 8)
             {
                 m_leftCursor = 7;
                 m_leftSelect = 7 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 9)
             {
                 m_leftCursor = 8;
                 m_leftSelect = 8 + m_leftBegin;
-                result = Into();
             }
             else if (LEFT_PANEL_STARTY + PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 10)
             {
                 m_leftCursor = 9;
                 m_leftSelect = 9 + m_leftBegin;
+            }
+
+            if (m_leftSelect >= m_leftList.size())
+            {
+                m_leftCursor = previousCursor;
+                m_leftSelect = previousSelect;
+            }
+
+            if (m_leftSelect != previousSelect)
+            {
+                m_SE->PlayClick();
                 result = Into();
             }
         }
@@ -697,16 +703,55 @@ void PatchTestLib::Draw()
     // カーソルの表示
     if (m_eFocus == eFocus::LEFT)
     {
-        m_sprCursor->DrawImage(LEFT_PANEL_STARTX - 30,
-                               LEFT_PANEL_STARTY + 5 + (m_leftCursor * 60));
+        if (m_leftCursor != -1)
+        {
+            m_sprCursor->DrawImage(LEFT_PANEL_STARTX - 30,
+                                   LEFT_PANEL_STARTY + 5 + (m_leftCursor * 60));
+        }
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
-        m_sprCursor->DrawImage(RIGHT_PANEL_STARTX - 30,
-                               RIGHT_PANEL_STARTY + 5 + (m_rightCursor * 60));
+        if (m_rightCursor != -1)
+        {
+            m_sprCursor->DrawImage(RIGHT_PANEL_STARTX - 30,
+                                   RIGHT_PANEL_STARTY + 5 + (m_rightCursor * 60));
+        }
     }
+}
 
+void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
+{
+    // カーソルの位置が範囲外なら範囲内に収まるように移動する。
+    // リストが空の場合は、-1をセットする
 
+    if (m_eFocus == eFocus::LEFT)
+    {
+        if (m_leftList.empty())
+        {
+            m_leftCursor = -1;
+        }
+        else
+        {
+            if (m_leftSelect >= m_leftList.size())
+            {
+                m_leftSelect = m_leftList.size() - 1;
+            }
+        }
+    }
+    else if (m_eFocus == eFocus::RIGHT)
+    {
+        if (m_rightList.empty())
+        {
+            m_rightCursor = -1;
+        }
+        else
+        {
+            if (m_rightSelect >= m_rightList.size())
+            {
+                m_rightSelect = m_rightList.size() - 1;
+            }
+        }
+    }
 }
 
 void NSPatchTestLib::TestItem::SetId(const int arg)

@@ -13,3 +13,6 @@
 /patchTestLib/patchTestLib.vcxproj.user
 /patchTestLib/patchTestLib.user
 /Sample/Sample.vcxproj.user
+/patchTestLib/x64/Debug
+/Sample/x64/Debug
+/x64/Debug
