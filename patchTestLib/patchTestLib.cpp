@@ -29,20 +29,26 @@ void PatchTestLib::Init(IFont* font,
     m_sprBackground = sprBackground;
 }
 
-void NSPatchTestLib::PatchTestLib::SetInventoryList(const std::vector<StoreItem>& arg)
+void NSPatchTestLib::PatchTestLib::AddTestItem(const TestItem& arg)
 {
-    m_leftList = arg;
+    m_leftList.push_back(arg);
 }
 
-void NSPatchTestLib::PatchTestLib::SetStorehouseList(const std::vector<StoreItem>& arg)
+void NSPatchTestLib::PatchTestLib::AddQueueItem(const QueuedTestItem& arg)
 {
-    m_rightList = arg;
+    m_rightList.push_back(arg);
 }
 
-void NSPatchTestLib::PatchTestLib::MoveFromInventoryToStorehouse(const int id, const int subid)
+void NSPatchTestLib::PatchTestLib::MoveFromInventoryToQueue(const int id, const int subid,
+                                                            const int year,
+                                                            const int month,
+                                                            const int day,
+                                                            const int hour,
+                                                            const int minute,
+                                                            const int second)
 {
     auto it = std::find_if(m_leftList.begin(), m_leftList.end(),
-                           [&](const StoreItem& x)
+                           [&](const TestItem& x)
                            {
                                return x.GetId() == id && x.GetSubId() == subid;
                            });
@@ -52,79 +58,48 @@ void NSPatchTestLib::PatchTestLib::MoveFromInventoryToStorehouse(const int id, c
         throw std::exception();
     }
 
-    StoreItem item = *it;
+    TestItem item = *it;
     m_leftList.erase(it);
-    m_rightList.push_back(item);
 
-    std::sort(m_rightList.begin(), m_rightList.end(),
-              [&](const StoreItem& left, const StoreItem& right)
-              {
-                  if (left.GetId() < right.GetId())
-                  {
-                      return true;
-                  }
-                  else if (left.GetId() > right.GetId())
-                  {
-                      return false;
-                  }
-                  // left.GetId() == right.GetId()
-                  else
-                  {
-                      if (left.GetSubId() < right.GetSubId())
-                      {
-                          return true;
-                      }
-                      //  left.GetSubId() >= right.GetSubId()
-                      else
-                      {
-                          return false;
-                      }
-                  }
-              });
+    QueuedTestItem queItem;
+    queItem.SetName(it->GetName());
+
+    queItem.SetDateReq(year, month, day, hour, minute, second);
+    m_rightList.push_back(queItem);
 }
 
-void NSPatchTestLib::PatchTestLib::MoveFromStorehouseToInventory(const int id, const int subid)
+void NSPatchTestLib::PatchTestLib::UpdateQueueItemStatus(const int index,
+                                                         const int yearStart,
+                                                         const int monthStart,
+                                                         const int dayStart,
+                                                         const int hourStart,
+                                                         const int minuteStart,
+                                                         const int secondStart,
+                                                         const int yearEnd,
+                                                         const int monthEnd,
+                                                         const int dayEnd,
+                                                         const int hourEnd,
+                                                         const int minuteEnd,
+                                                         const int secondEnd,
+                                                         const std::string& result)
 {
-    auto it = std::find_if(m_rightList.begin(), m_rightList.end(),
-                           [&](const StoreItem& x)
-                           {
-                               return x.GetId() == id && x.GetSubId() == subid;
-                           });
+    m_rightList.at(index).SetDateStart(yearStart, monthStart, dayStart,
+                                       hourStart, minuteStart, secondStart);
 
-    if (it == m_rightList.end())
-    {
-        throw std::exception();
-    }
+    m_rightList.at(index).SetDateEnd(yearEnd, monthEnd, dayEnd,
+                                     hourEnd, minuteEnd, secondEnd);
 
-    StoreItem item = *it;
-    m_rightList.erase(it);
-    m_leftList.push_back(item);
+    m_rightList.at(index).SetResult(result);
+}
 
-    std::sort(m_leftList.begin(), m_leftList.end(),
-              [&](const StoreItem& left, const StoreItem& right)
-              {
-                  if (left.GetId() < right.GetId())
-                  {
-                      return true;
-                  }
-                  else if (left.GetId() > right.GetId())
-                  {
-                      return false;
-                  }
-                  // left.GetId() == right.GetId()
-                  else
-                  {
-                      if (left.GetSubId() < right.GetSubId())
-                      {
-                          return true;
-                      }
-                      //  left.GetSubId() >= right.GetSubId()
-                      else
-                      {
-                          return false;
-                      }
-                  }
-              });
+void NSPatchTestLib::PatchTestLib::UpdateDateTime(const int year,
+                                                  const int month,
+                                                  const int day,
+                                                  const int hour,
+                                                  const int minute,
+                                                  const int second)
+{
+    m_CurrentDateTime = CreateDateTimeStr(year, month, day, hour, minute, second);
 }
 
 std::string PatchTestLib::Up()
@@ -254,14 +229,7 @@ std::string PatchTestLib::Into()
         result += ":" + std::to_string(m_leftList.at(m_leftSelect).GetSubId());
         m_SE->PlayClick();
     }
-    else if (m_eFocus == eFocus::RIGHT)
-    {
-        result = "right:";
-        result += m_rightList.at(m_rightSelect).GetName();
-        result += ":" + std::to_string(m_rightList.at(m_rightSelect).GetId());
-        result += ":" + std::to_string(m_rightList.at(m_rightSelect).GetSubId());
-        m_SE->PlayClick();
-    }
+
     return result;
 }
 
@@ -656,17 +624,21 @@ void PatchTestLib::Draw()
     m_sprBackground->DrawImage(0, 0);
 
     // 上部分の左に「インベントリ」、右側に「倉庫」と表示する
-    m_font->DrawText_("食材リスト", 205, 110);
+    m_font->DrawText_("食材リスト", 205, 80);
 
     m_font->DrawText_("食材名", 155, 160, 64);
 
-    m_font->DrawText_("パッチテストのリスト", 855, 110);
+    m_font->DrawText_("テスト状況", 855, 80);
+
+    m_font->DrawText_("現在日時", 1255, 80, 64);
+
+    m_font->DrawText_(m_CurrentDateTime, 1400, 80, 64);
 
     m_font->DrawText_("食材名", 455, 160, 64);
-    m_font->DrawText_("依頼日", 655, 160, 64);
-    m_font->DrawText_("開始日", 855, 160, 64);
-    m_font->DrawText_("完了日", 1055, 160, 64);
-    m_font->DrawText_("判定結果", 1255, 160, 64);
+    m_font->DrawText_("テスト状況", 700, 160, 64);
+    m_font->DrawText_("依頼日", 900, 160, 64);
+    m_font->DrawText_("開始日", 1100, 160, 64);
+    m_font->DrawText_("完了日", 1300, 160, 64);
 
     // 左の列のインベントリを表示
     if ((int)m_leftList.size() >= PANEL_ROW_MAX)
@@ -674,8 +646,8 @@ void PatchTestLib::Draw()
         for (int i = m_leftBegin; i < m_leftBegin + PANEL_ROW_MAX; ++i)
         {
             m_font->DrawText_(m_leftList.at(i).GetName(),
-                              LEFT_PANEL_STARTX + PANEL_PADDINGX,
-                              LEFT_PANEL_STARTY + PANEL_PADDINGY + ((i - m_leftBegin) * PANEL_HEIGHT));
+                              LEFT_PANEL_STARTX,
+                              LEFT_PANEL_STARTY + ((i - m_leftBegin) * PANEL_HEIGHT));
         }
     }
     else
@@ -683,28 +655,67 @@ void PatchTestLib::Draw()
         for (std::size_t i = 0; i < m_leftList.size(); ++i)
         {
             m_font->DrawText_(m_leftList.at(i).GetName(),
-                              LEFT_PANEL_STARTX + PANEL_PADDINGX,
-                              LEFT_PANEL_STARTY + PANEL_PADDINGY + ((int)i * PANEL_HEIGHT));
+                              LEFT_PANEL_STARTX,
+                              LEFT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
         }
     }
 
-    // 右の列の倉庫を表示
+    // 右の列にテスト状況を表示
+    // 末尾の要素が一番上に表示される
     if ((int)m_rightList.size() >= PANEL_ROW_MAX)
     {
         for (int i = m_rightBegin; i < m_rightBegin + PANEL_ROW_MAX; ++i)
         {
-            m_font->DrawText_(m_rightList.at(i).GetName(),
-                              RIGHT_PANEL_STARTX + PANEL_PADDINGX,
-                              RIGHT_PANEL_STARTY + PANEL_PADDINGY + ((i - m_rightBegin) * PANEL_HEIGHT));
+            int work = (m_rightList.size() - 1) - i;
+
+            int work2 = (i - m_rightBegin);
+
+            m_font->DrawText_(m_rightList.at(work).GetName(),
+                              RIGHT_PANEL_STARTX,
+                              RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetResult(),
+                              RIGHT_PANEL_STARTX + 300,
+                              RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateReqStr(),
+                              RIGHT_PANEL_STARTX + 500,
+                              RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateStartStr(),
+                              RIGHT_PANEL_STARTX + 700,
+                              RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateEndStr(),
+                              RIGHT_PANEL_STARTX + 900,
+                              RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
         }
     }
     else
     {
-        for (std::size_t i = 0; i < m_rightList.size(); ++i)
+        for (size_t i = 0; i < m_rightList.size(); ++i)
         {
-            m_font->DrawText_(m_rightList.at(i).GetName(),
-                              RIGHT_PANEL_STARTX + PANEL_PADDINGX,
-                              RIGHT_PANEL_STARTY + PANEL_PADDINGY + ((int)i * PANEL_HEIGHT));
+            int work = (m_rightList.size() - 1) - i;
+            m_font->DrawText_(m_rightList.at(work).GetName(),
+                              RIGHT_PANEL_STARTX,
+                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetResult(),
+                              RIGHT_PANEL_STARTX + 300,
+                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateReqStr(),
+                              RIGHT_PANEL_STARTX + 500,
+                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateStartStr(),
+                              RIGHT_PANEL_STARTX + 700,
+                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+
+            m_font->DrawText_(m_rightList.at(work).GetDateEndStr(),
+                              RIGHT_PANEL_STARTX + 900,
+                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+
         }
     }
 
@@ -721,32 +732,167 @@ void PatchTestLib::Draw()
 
 }
 
-void NSPatchTestLib::StoreItem::SetId(const int arg)
+void NSPatchTestLib::TestItem::SetId(const int arg)
 {
     m_id = arg;
 }
 
-int NSPatchTestLib::StoreItem::GetId() const
+int NSPatchTestLib::TestItem::GetId() const
 {
     return m_id;
 }
 
-void NSPatchTestLib::StoreItem::SetSubId(const int arg)
+void NSPatchTestLib::TestItem::SetSubId(const int arg)
 {
     m_idSub = arg;
 }
 
-int NSPatchTestLib::StoreItem::GetSubId() const
+int NSPatchTestLib::TestItem::GetSubId() const
 {
     return m_idSub;
 }
 
-void NSPatchTestLib::StoreItem::SetName(const std::string& arg)
+void NSPatchTestLib::TestItem::SetName(const std::string& arg)
 {
     m_name = arg;
 }
 
-std::string NSPatchTestLib::StoreItem::GetName() const
+std::string NSPatchTestLib::TestItem::GetName() const
 {
     return m_name;
+}
+
+void NSPatchTestLib::QueuedTestItem::SetName(const std::string& arg)
+{
+    m_name = arg;
+}
+
+std::string NSPatchTestLib::QueuedTestItem::GetName() const
+{
+    return m_name;
+}
+
+void NSPatchTestLib::QueuedTestItem::SetDateReq(const int year, const int month, const int day,
+                                                const int hour, const int minute, const int second)
+{
+    m_reqYear = year;
+    m_reqMonth = month;
+    m_reqDay = day;
+    m_reqHour = hour;
+    m_reqMinute = minute;
+    m_reqSecond = second;
+}
+
+void NSPatchTestLib::QueuedTestItem::GetDateReq(int* year, int* month, int* day,
+                                                int* hour, int* minute, int* second)
+{
+    *year = m_reqYear;
+    *month = m_reqMonth;
+    *day = m_reqDay;
+    *hour = m_reqHour;
+    *minute = m_reqMinute;
+    *second = m_reqSecond;
+}
+
+std::string NSPatchTestLib::QueuedTestItem::GetDateReqStr()
+{
+    return CreateDateTimeStr(m_reqYear,
+                             m_reqMonth,
+                             m_reqDay,
+                             m_reqHour,
+                             m_reqMinute,
+                             m_reqSecond);
+}
+
+void NSPatchTestLib::QueuedTestItem::SetDateStart(const int year, const int month, const int day,
+                                                  const int hour, const int minute, const int second)
+{
+    m_startYear = year;
+    m_startMonth = month;
+    m_startDay = day;
+    m_startHour = hour;
+    m_startMinute = minute;
+    m_startSecond = second;
+}
+
+void NSPatchTestLib::QueuedTestItem::GetDateStart(int* year, int* month, int* day,
+                                                  int* hour, int* minute, int* second)
+{
+    *year = m_startYear;
+    *month = m_startMonth;
+    *day = m_startDay;
+    *hour = m_startHour;
+    *minute = m_startMinute;
+    *second = m_startSecond;
+}
+
+std::string NSPatchTestLib::QueuedTestItem::GetDateStartStr()
+{
+    return CreateDateTimeStr(m_startYear,
+                             m_startMonth,
+                             m_startDay,
+                             m_startHour,
+                             m_startMinute,
+                             m_startSecond);
+}
+
+void NSPatchTestLib::QueuedTestItem::SetDateEnd(const int year, const int month, const int day,
+                                                const int hour, const int minute, const int second)
+{
+    m_endYear = year;
+    m_endMonth = month;
+    m_endDay = day;
+    m_endHour = hour;
+    m_endMinute = minute;
+    m_endSecond = second;
+}
+
+void NSPatchTestLib::QueuedTestItem::GetDateEnd(int* year, int* month, int* day,
+                                                int* hour, int* minute, int* second)
+{
+    *year = m_endYear;
+    *month = m_endMonth;
+    *day = m_endDay;
+    *hour = m_endHour;
+    *minute = m_endMinute;
+    *second = m_endSecond;
+}
+
+std::string NSPatchTestLib::QueuedTestItem::GetDateEndStr()
+{
+    return CreateDateTimeStr(m_endYear,
+                             m_endMonth,
+                             m_endDay,
+                             m_endHour,
+                             m_endMinute,
+                             m_endSecond);
+}
+
+void NSPatchTestLib::QueuedTestItem::SetResult(const std::string& arg)
+{
+    m_result = arg;
+}
+
+std::string NSPatchTestLib::QueuedTestItem::GetResult() const
+{
+    return m_result;
+}
+
+std::string NSPatchTestLib::CreateDateTimeStr(const int y, const int M, const int d, const int h, const int m, const int s)
+{
+    if (y == 0)
+    {
+        return std::string();
+    }
+
+    std::string work;
+
+    work += std::to_string(y) + "/";
+    work += std::to_string(M) + "/";
+    work += std::to_string(d) + " ";
+    work += std::to_string(h) + ":";
+    work += std::to_string(m) + ":";
+    work += std::to_string(s);
+
+    return work;
 }

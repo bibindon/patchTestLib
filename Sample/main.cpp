@@ -101,7 +101,7 @@ public:
     {
         HRESULT hr = D3DXCreateFont(
             m_pD3DDevice,
-            24,
+            20,
             0,
             FW_NORMAL,
             1,
@@ -276,32 +276,63 @@ HRESULT InitD3D(HWND hWnd)
 
     menu.Init(pFont, pSE, sprCursor, sprBackground);
     {
-        std::vector<StoreItem> vs;
+        std::vector<TestItem> vs;
 
         for (int i = 0; i < 20; ++i)
         {
-            StoreItem storeItem;
-            storeItem.SetId(1);
-            storeItem.SetSubId(1);
+            TestItem testItem;
+            testItem.SetId(1);
+            testItem.SetSubId(1);
             std::string work;
             work = "ƒAƒCƒeƒ€‚`‚`‚`" + std::to_string(i);
-            storeItem.SetName(work);
-            vs.push_back(storeItem);
+            testItem.SetName(work);
+            menu.AddTestItem(testItem);
         }
-        menu.SetInventoryList(vs);
-        vs.clear();
 
-        for (int i = 0; i < 20; ++i)
         {
-            StoreItem storeItem;
-            storeItem.SetId(1);
-            storeItem.SetSubId(1);
+            QueuedTestItem queItem;
             std::string work;
-            work = "ƒAƒCƒeƒ€‚a‚a‚a" + std::to_string(i);
-            storeItem.SetName(work);
-            vs.push_back(storeItem);
+            work = "ƒAƒCƒeƒ€‚a‚a‚a1";
+            queItem.SetName(work);
+            queItem.SetDateReq(1, 2, 3, 4, 5, 12);
+            queItem.SetDateStart(1, 2, 3, 4, 5, 13);
+            queItem.SetDateEnd(1, 2, 3, 4, 5, 14);
+            queItem.SetResult("“Å");
+            menu.AddQueueItem(queItem);
         }
-        menu.SetStorehouseList(vs);
+
+        {
+            QueuedTestItem queItem;
+            std::string work;
+            work = "ƒAƒCƒeƒ€‚a‚a‚a2";
+            queItem.SetName(work);
+            queItem.SetDateReq(1, 2, 3, 4, 5, 9);
+            queItem.SetDateStart(1, 2, 3, 4, 5, 10);
+            queItem.SetDateEnd(1, 2, 3, 4, 5, 11);
+            queItem.SetResult("“Å‚Å‚Í‚È‚¢");
+            menu.AddQueueItem(queItem);
+        }
+
+        {
+            QueuedTestItem queItem;
+            std::string work;
+            work = "ƒAƒCƒeƒ€‚a‚a‚a3";
+            queItem.SetName(work);
+            queItem.SetDateReq(1, 2, 3, 4, 5, 7);
+            queItem.SetDateStart(1, 2, 3, 4, 5, 8);
+            queItem.SetResult("ƒeƒXƒg’†");
+            menu.AddQueueItem(queItem);
+        }
+
+        {
+            QueuedTestItem queItem;
+            std::string work;
+            work = "ƒAƒCƒeƒ€‚a‚a‚a4";
+            queItem.SetName(work);
+            queItem.SetDateReq(1, 2, 3, 4, 5, 6);
+            queItem.SetResult("–¢ŽÀŽ{");
+            menu.AddQueueItem(queItem);
+        }
     }
 
     return S_OK;
@@ -317,6 +348,25 @@ VOID Cleanup()
 
 VOID Render()
 {
+    {
+        static int work = 0;
+        static int work2 = 0;
+
+        ++work;
+        if (work > 60)
+        {
+            work = 0;
+            ++work2;
+        }
+
+        if (work2 > 24)
+        {
+            work2 = 0;
+        }
+
+        menu.UpdateDateTime(work2, work2, work2, work2, work2, work2);
+    }
+
     if (NULL == g_pd3dDevice)
     {
         return;
