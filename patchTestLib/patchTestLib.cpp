@@ -722,11 +722,13 @@ void PatchTestLib::Draw()
     // カーソルの表示
     if (m_eFocus == eFocus::LEFT)
     {
-        m_sprCursor->DrawImage(80, 218 + (m_leftCursor * 60));
+        m_sprCursor->DrawImage(LEFT_PANEL_STARTX - 30,
+                               LEFT_PANEL_STARTY + 5 + (m_leftCursor * 60));
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
-        m_sprCursor->DrawImage(680, 218 + (m_rightCursor * 60));
+        m_sprCursor->DrawImage(RIGHT_PANEL_STARTX - 30,
+                               RIGHT_PANEL_STARTY + 5 + (m_rightCursor * 60));
     }
 
 

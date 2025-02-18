@@ -234,7 +234,7 @@ private:
     const int PANEL_WIDTH = 432;
     const int PANEL_HEIGHT = 60;
 
-    const int LEFT_PANEL_STARTX = 60;
+    const int LEFT_PANEL_STARTX = 100;
     const int LEFT_PANEL_STARTY = 200;
 
     const int RIGHT_PANEL_STARTX = 400;
