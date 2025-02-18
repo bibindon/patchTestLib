@@ -276,102 +276,12 @@ std::string PatchTestLib::Back()
 
 std::string NSPatchTestLib::PatchTestLib::Next()
 {
-    if (m_eFocus == eFocus::LEFT)
-    {
-        auto previousSelect = m_leftSelect;
-        if (m_leftSelect <= (int)m_leftList.size() - 2)
-        {
-            m_leftSelect++;
-            m_SE->PlayMove();
-        }
-
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_leftCursor != PANEL_ROW_MAX - 1)
-        {
-            m_leftCursor++;
-        }
-        else if (m_leftCursor == PANEL_ROW_MAX - 1)
-        {
-            if (previousSelect != (int)m_leftList.size() - 1)
-            {
-                m_leftBegin++;
-            }
-        }
-    }
-    else if (m_eFocus == eFocus::RIGHT)
-    {
-        auto previousSelect = m_rightSelect;
-        if (m_rightSelect <= (int)m_rightList.size() - 2)
-        {
-            m_rightSelect++;
-            m_SE->PlayMove();
-        }
-
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_rightCursor != PANEL_ROW_MAX - 1)
-        {
-            m_rightCursor++;
-        }
-        else if (m_rightCursor == PANEL_ROW_MAX - 1)
-        {
-            if (previousSelect != (int)m_rightList.size() - 1)
-            {
-                m_rightBegin++;
-            }
-        }
-    }
-    return "";
+    return Down();
 }
 
 std::string NSPatchTestLib::PatchTestLib::Previous()
 {
-    if (m_eFocus == eFocus::LEFT)
-    {
-        auto previousSelect = m_leftSelect;
-        if (m_leftSelect >= 1)
-        {
-            m_leftSelect--;
-            m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_leftCursor != 0)
-        {
-            m_leftCursor--;
-        }
-        else if (m_leftCursor == 0)
-        {
-            if (previousSelect != 0)
-            {
-                m_leftBegin--;
-            }
-        }
-    }
-    else if (m_eFocus == eFocus::RIGHT)
-    {
-        auto previousSelect = m_rightSelect;
-        if (m_rightSelect >= 1)
-        {
-            m_rightSelect--;
-            m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_rightCursor != 0)
-        {
-            m_rightCursor--;
-        }
-        else if (m_rightCursor == 0)
-        {
-            if (previousSelect != 0)
-            {
-                m_rightBegin--;
-            }
-        }
-    }
-    return "";
+    return Up();
 }
 
 void PatchTestLib::CursorOn(const int x, const int y)
