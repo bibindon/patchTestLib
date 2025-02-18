@@ -31,6 +31,24 @@ void PatchTestLib::Init(IFont* font,
     m_sprVBar = sprVBar;
 }
 
+void NSPatchTestLib::PatchTestLib::Finalize()
+{
+    delete m_font;
+    m_font = nullptr;
+
+    delete m_SE;
+    m_SE = nullptr;
+
+    delete m_sprCursor;
+    m_sprCursor = nullptr;
+
+    delete m_sprBackground;
+    m_sprBackground = nullptr;
+
+    delete m_sprVBar;
+    m_sprVBar = nullptr;
+}
+
 void NSPatchTestLib::PatchTestLib::AddTestItem(const TestItem& arg)
 {
     m_leftList.push_back(arg);
@@ -576,7 +594,7 @@ std::string PatchTestLib::Click(const int x, const int y)
                 m_leftSelect = 9 + m_leftBegin;
             }
 
-            if (m_leftSelect >= m_leftList.size())
+            if ((size_t)m_leftSelect >= m_leftList.size())
             {
                 m_leftCursor = previousCursor;
                 m_leftSelect = previousSelect;
@@ -732,7 +750,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
         }
         else
         {
-            if (m_leftSelect >= m_leftList.size())
+            if ((size_t)m_leftSelect >= m_leftList.size())
             {
                 m_leftSelect = m_leftList.size() - 1;
             }
@@ -746,7 +764,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
         }
         else
         {
-            if (m_rightSelect >= m_rightList.size())
+            if ((size_t)m_rightSelect >= m_rightList.size())
             {
                 m_rightSelect = m_rightList.size() - 1;
             }

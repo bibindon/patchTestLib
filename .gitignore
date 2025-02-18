@@ -16,3 +16,10 @@
 /patchTestLib/x64/Debug
 /Sample/x64/Debug
 /x64/Debug
+/Release/d3dx9_43.dll
+/Release/d3dx11_43.dll
+/Release/d3dx10_43.dll
+/Release/D3DCompiler_43.dll
+/Release/simple.cso
+/Release/Sample.exe
+/Sample/Release

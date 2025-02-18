@@ -156,6 +156,8 @@ public:
               ISprite* sprBackground,
               ISprite* sprVBar);
 
+    void Finalize();
+
     void AddTestItem(const TestItem& arg);
     void AddQueueItem(const QueuedTestItem& arg);
 
