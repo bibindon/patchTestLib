@@ -269,12 +269,15 @@ HRESULT InitD3D(HWND hWnd)
     Sprite* sprBackground = new Sprite(g_pd3dDevice);
     sprBackground->Load("background.png");
 
+    Sprite* sprVBar = new Sprite(g_pd3dDevice);
+    sprVBar->Load("vbar.png");
+
     IFont* pFont = new Font(g_pd3dDevice);
     pFont->Init();
 
     ISoundEffect* pSE = new SoundEffect();
 
-    menu.Init(pFont, pSE, sprCursor, sprBackground);
+    menu.Init(pFont, pSE, sprCursor, sprBackground, sprVBar);
     {
         std::vector<TestItem> vs;
 

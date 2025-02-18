@@ -19,14 +19,16 @@ static std::vector<std::string> split(const std::string& s, char delim)
 }
 
 void PatchTestLib::Init(IFont* font,
-                         ISoundEffect* SE,
-                         ISprite* sprCursor,
-                         ISprite* sprBackground)
+                        ISoundEffect* SE,
+                        ISprite* sprCursor,
+                        ISprite* sprBackground,
+                        ISprite* sprVBar)
 {
     m_font = font;
     m_SE = SE;
     m_sprCursor = sprCursor;
     m_sprBackground = sprBackground;
+    m_sprVBar = sprVBar;
 }
 
 void NSPatchTestLib::PatchTestLib::AddTestItem(const TestItem& arg)
@@ -106,6 +108,7 @@ std::string PatchTestLib::Up()
 {
     if (m_eFocus == eFocus::LEFT)
     {
+        auto previousSelect = m_leftSelect;
         if (m_leftSelect >= 1)
         {
             m_leftSelect--;
@@ -119,7 +122,7 @@ std::string PatchTestLib::Up()
         }
         else if (m_leftCursor == 0)
         {
-            if (m_leftSelect != 0)
+            if (previousSelect != 0)
             {
                 m_leftBegin--;
             }
@@ -127,6 +130,7 @@ std::string PatchTestLib::Up()
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
+        auto previousSelect = m_rightSelect;
         if (m_rightSelect >= 1)
         {
             m_rightSelect--;
@@ -140,7 +144,7 @@ std::string PatchTestLib::Up()
         }
         else if (m_rightCursor == 0)
         {
-            if (m_rightSelect != 0)
+            if (previousSelect != 0)
             {
                 m_rightBegin--;
             }
@@ -153,6 +157,7 @@ std::string PatchTestLib::Down()
 {
     if (m_eFocus == eFocus::LEFT)
     {
+        auto previousSelect = m_leftSelect;
         if (m_leftSelect <= (int)m_leftList.size() - 2)
         {
             m_leftSelect++;
@@ -167,7 +172,7 @@ std::string PatchTestLib::Down()
         }
         else if (m_leftCursor == PANEL_ROW_MAX - 1)
         {
-            if (m_leftSelect != (int)m_leftList.size() - 1)
+            if (previousSelect != (int)m_leftList.size() - 1)
             {
                 m_leftBegin++;
             }
@@ -175,6 +180,7 @@ std::string PatchTestLib::Down()
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
+        auto previousSelect = m_rightSelect;
         if (m_rightSelect <= (int)m_rightList.size() - 2)
         {
             m_rightSelect++;
@@ -189,7 +195,7 @@ std::string PatchTestLib::Down()
         }
         else if (m_rightCursor == PANEL_ROW_MAX - 1)
         {
-            if (m_rightSelect != (int)m_rightList.size() - 1)
+            if (previousSelect != (int)m_rightList.size() - 1)
             {
                 m_rightBegin++;
             }
@@ -246,6 +252,7 @@ std::string NSPatchTestLib::PatchTestLib::Next()
 {
     if (m_eFocus == eFocus::LEFT)
     {
+        auto previousSelect = m_leftSelect;
         if (m_leftSelect <= (int)m_leftList.size() - 2)
         {
             m_leftSelect++;
@@ -260,7 +267,7 @@ std::string NSPatchTestLib::PatchTestLib::Next()
         }
         else if (m_leftCursor == PANEL_ROW_MAX - 1)
         {
-            if (m_leftSelect != (int)m_leftList.size() - 1)
+            if (previousSelect != (int)m_leftList.size() - 1)
             {
                 m_leftBegin++;
             }
@@ -268,6 +275,7 @@ std::string NSPatchTestLib::PatchTestLib::Next()
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
+        auto previousSelect = m_rightSelect;
         if (m_rightSelect <= (int)m_rightList.size() - 2)
         {
             m_rightSelect++;
@@ -282,7 +290,7 @@ std::string NSPatchTestLib::PatchTestLib::Next()
         }
         else if (m_rightCursor == PANEL_ROW_MAX - 1)
         {
-            if (m_rightSelect != (int)m_rightList.size() - 1)
+            if (previousSelect != (int)m_rightList.size() - 1)
             {
                 m_rightBegin++;
             }
@@ -295,6 +303,7 @@ std::string NSPatchTestLib::PatchTestLib::Previous()
 {
     if (m_eFocus == eFocus::LEFT)
     {
+        auto previousSelect = m_leftSelect;
         if (m_leftSelect >= 1)
         {
             m_leftSelect--;
@@ -308,7 +317,7 @@ std::string NSPatchTestLib::PatchTestLib::Previous()
         }
         else if (m_leftCursor == 0)
         {
-            if (m_leftSelect != 0)
+            if (previousSelect != 0)
             {
                 m_leftBegin--;
             }
@@ -316,6 +325,7 @@ std::string NSPatchTestLib::PatchTestLib::Previous()
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
+        auto previousSelect = m_rightSelect;
         if (m_rightSelect >= 1)
         {
             m_rightSelect--;
@@ -329,7 +339,7 @@ std::string NSPatchTestLib::PatchTestLib::Previous()
         }
         else if (m_rightCursor == 0)
         {
-            if (m_rightSelect != 0)
+            if (previousSelect != 0)
             {
                 m_rightBegin--;
             }
@@ -623,8 +633,11 @@ void PatchTestLib::Draw()
     // 背景
     m_sprBackground->DrawImage(0, 0);
 
+    // 縦線
+    m_sprVBar->DrawImage(350, 150);
+
     // 上部分の左に「インベントリ」、右側に「倉庫」と表示する
-    m_font->DrawText_("食材リスト", 205, 80);
+    m_font->DrawText_("食材リスト", 125, 80);
 
     m_font->DrawText_("食材名", 155, 160, 64);
 

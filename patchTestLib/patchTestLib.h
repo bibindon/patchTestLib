@@ -153,7 +153,8 @@ public:
     void Init(IFont* font,
               ISoundEffect* SE,
               ISprite* sprCursor,
-              ISprite* sprBackground);
+              ISprite* sprBackground,
+              ISprite* sprVBar);
 
     void AddTestItem(const TestItem& arg);
     void AddQueueItem(const QueuedTestItem& arg);
@@ -224,6 +225,7 @@ private:
 
     ISprite* m_sprCursor = nullptr;
     ISprite* m_sprBackground = nullptr;
+    ISprite* m_sprVBar = nullptr;
     IFont* m_font = nullptr;
     ISoundEffect* m_SE = nullptr;
     eFocus m_eFocus = eFocus::LEFT;
