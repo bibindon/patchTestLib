@@ -351,7 +351,9 @@ std::string NSPatchTestLib::PatchTestLib::Previous()
 void PatchTestLib::CursorOn(const int x, const int y)
 {
     int previousCursor = m_leftCursor;
-    if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + PANEL_WIDTH)
+    int previousSelect = m_leftSelect;
+
+    if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
     {
         if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 1)
         {
@@ -414,13 +416,22 @@ void PatchTestLib::CursorOn(const int x, const int y)
             m_leftSelect = 9 + m_leftBegin;
         }
     }
+
+    if ((size_t)m_leftSelect >= m_leftList.size())
+    {
+        m_leftSelect = previousSelect;
+        m_leftCursor = previousCursor;
+    }
+
     if (previousCursor != m_leftCursor)
     {
         m_SE->PlayMove();
     }
 
     int previousRightCursor = m_rightCursor;
-    if (RIGHT_PANEL_STARTX < x && x <= RIGHT_PANEL_STARTX + PANEL_WIDTH)
+    int previousRightSelect = m_rightSelect;
+
+    if (RIGHT_PANEL_STARTX < x && x <= RIGHT_PANEL_STARTX + RIGHT_PANEL_WIDTH)
     {
         if (RIGHT_PANEL_STARTY < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 1)
         {
@@ -483,6 +494,13 @@ void PatchTestLib::CursorOn(const int x, const int y)
             m_rightSelect = 9 + m_rightBegin;
         }
     }
+
+    if ((size_t)m_rightSelect >= m_rightList.size())
+    {
+        m_rightSelect = previousRightSelect;
+        m_rightCursor = previousRightCursor;
+    }
+
     if (previousRightCursor != m_rightCursor)
     {
         m_SE->PlayMove();
@@ -495,7 +513,7 @@ std::string PatchTestLib::Click(const int x, const int y)
     m_SE->PlayClick();
     if (m_eFocus == eFocus::LEFT)
     {
-        if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + PANEL_WIDTH)
+        if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
         {
             if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 1)
             {
@@ -561,69 +579,7 @@ std::string PatchTestLib::Click(const int x, const int y)
     }
     else if (m_eFocus == eFocus::RIGHT)
     {
-        if (RIGHT_PANEL_STARTX < x && x <= RIGHT_PANEL_STARTX + PANEL_WIDTH)
-        {
-            if (RIGHT_PANEL_STARTY < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 1)
-            {
-                m_rightCursor = 0;
-                m_rightSelect = 0 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 1 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 2)
-            {
-                m_rightCursor = 1;
-                m_rightSelect = 1 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 2 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 3)
-            {
-                m_rightCursor = 2;
-                m_rightSelect = 2 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 3 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 4)
-            {
-                m_rightCursor = 3;
-                m_rightSelect = 3 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 4 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 5)
-            {
-                m_rightCursor = 4;
-                m_rightSelect = 4 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 5 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 6)
-            {
-                m_rightCursor = 5;
-                m_rightSelect = 5 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 6 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 7)
-            {
-                m_rightCursor = 6;
-                m_rightSelect = 6 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 7 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 8)
-            {
-                m_rightCursor = 7;
-                m_rightSelect = 7 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 8 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 9)
-            {
-                m_rightCursor = 8;
-                m_rightSelect = 8 + m_rightBegin;
-                result = Into();
-            }
-            else if (RIGHT_PANEL_STARTY + PANEL_HEIGHT * 9 < y && y <= RIGHT_PANEL_STARTY + PANEL_HEIGHT * 10)
-            {
-                m_rightCursor = 9;
-                m_rightSelect = 9 + m_rightBegin;
-                result = Into();
-            }
-        }
+        // do nothing
     }
     return result;
 }
