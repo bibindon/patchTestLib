@@ -599,15 +599,15 @@ void PatchTestLib::Draw()
 
     m_font->DrawText_("テスト状況", 855, 80);
 
-    m_font->DrawText_("現在日時", 1255, 80, 64);
+    m_font->DrawText_("現在日時", 1155, 80, 64);
 
-    m_font->DrawText_(m_CurrentDateTime, 1400, 80, 64);
+    m_font->DrawText_(m_CurrentDateTime, 1300, 80, 64);
 
     m_font->DrawText_("食材名", 455, 160, 64);
     m_font->DrawText_("テスト状況", 700, 160, 64);
-    m_font->DrawText_("依頼日", 900, 160, 64);
+    m_font->DrawText_("依頼日", 870, 160, 64);
     m_font->DrawText_("開始日", 1100, 160, 64);
-    m_font->DrawText_("完了日", 1300, 160, 64);
+    m_font->DrawText_("完了日", 1330, 160, 64);
 
     // 左の列のインベントリを表示
     if ((int)m_leftList.size() >= PANEL_ROW_MAX)
@@ -648,7 +648,7 @@ void PatchTestLib::Draw()
                               RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateReqStr(),
-                              RIGHT_PANEL_STARTX + 500,
+                              RIGHT_PANEL_STARTX + 470,
                               RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateStartStr(),
@@ -656,7 +656,7 @@ void PatchTestLib::Draw()
                               RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateEndStr(),
-                              RIGHT_PANEL_STARTX + 900,
+                              RIGHT_PANEL_STARTX + 930,
                               RIGHT_PANEL_STARTY + (work2 * PANEL_HEIGHT));
         }
     }
@@ -674,7 +674,7 @@ void PatchTestLib::Draw()
                               RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateReqStr(),
-                              RIGHT_PANEL_STARTX + 500,
+                              RIGHT_PANEL_STARTX + 470,
                               RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateStartStr(),
@@ -682,7 +682,7 @@ void PatchTestLib::Draw()
                               RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateEndStr(),
-                              RIGHT_PANEL_STARTX + 900,
+                              RIGHT_PANEL_STARTX + 930,
                               RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
 
         }
@@ -857,13 +857,56 @@ std::string NSPatchTestLib::CreateDateTimeStr(const int y, const int M, const in
     }
 
     std::string work;
+    std::string work2;
 
     work += std::to_string(y) + "/";
-    work += std::to_string(M) + "/";
-    work += std::to_string(d) + " ";
-    work += std::to_string(h) + ":";
-    work += std::to_string(m) + ":";
-    work += std::to_string(s);
+
+    // 一桁数字だったら二桁文字にする
+    if (M <= 9)
+    {
+        work += "0" + std::to_string(M) + "/";
+    }
+    else
+    {
+        work += std::to_string(M) + "/";
+    }
+
+    if (d <= 9)
+    {
+        work += "0" + std::to_string(d) + " ";
+    }
+    else
+    {
+        work += std::to_string(d) + " ";
+    }
+
+    if (h <= 9)
+    {
+        work += "0" + std::to_string(h) + ":";
+    }
+    else
+    {
+        work += std::to_string(h) + ":";
+    }
+
+    if (m <= 9)
+    {
+        work += "0" + std::to_string(m) + ":";
+    }
+    else
+    {
+        work += std::to_string(m) + ":";
+    }
+
+    if (s <= 9)
+    {
+        work += "0" + std::to_string(s);
+    }
+    else
+    {
+
+        work += std::to_string(s);
+    }
 
     return work;
 }

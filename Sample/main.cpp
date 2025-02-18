@@ -297,9 +297,9 @@ HRESULT InitD3D(HWND hWnd)
             std::string work;
             work = "ƒAƒCƒeƒ€‚a‚a‚a1";
             queItem.SetName(work);
-            queItem.SetDateReq(1, 2, 3, 4, 5, 12);
-            queItem.SetDateStart(1, 2, 3, 4, 5, 13);
-            queItem.SetDateEnd(1, 2, 3, 4, 5, 14);
+            queItem.SetDateReq(11111, 2, 3, 4, 5, 12);
+            queItem.SetDateStart(11111, 2, 3, 4, 5, 13);
+            queItem.SetDateEnd(11111, 2, 3, 4, 5, 14);
             queItem.SetResult("“Å");
             menu.AddQueueItem(queItem);
         }
@@ -309,9 +309,9 @@ HRESULT InitD3D(HWND hWnd)
             std::string work;
             work = "ƒAƒCƒeƒ€‚a‚a‚a2";
             queItem.SetName(work);
-            queItem.SetDateReq(1, 2, 3, 4, 5, 9);
-            queItem.SetDateStart(1, 2, 3, 4, 5, 10);
-            queItem.SetDateEnd(1, 2, 3, 4, 5, 11);
+            queItem.SetDateReq(11111, 2, 3, 4, 5, 9);
+            queItem.SetDateStart(11111, 2, 3, 4, 5, 10);
+            queItem.SetDateEnd(11111, 2, 3, 4, 5, 11);
             queItem.SetResult("“Å‚Å‚Í‚È‚¢");
             menu.AddQueueItem(queItem);
         }
@@ -321,8 +321,8 @@ HRESULT InitD3D(HWND hWnd)
             std::string work;
             work = "ƒAƒCƒeƒ€‚a‚a‚a3";
             queItem.SetName(work);
-            queItem.SetDateReq(1, 2, 3, 4, 5, 7);
-            queItem.SetDateStart(1, 2, 3, 4, 5, 8);
+            queItem.SetDateReq(11111, 2, 3, 4, 5, 7);
+            queItem.SetDateStart(11111, 2, 3, 4, 5, 8);
             queItem.SetResult("ƒeƒXƒg’†");
             menu.AddQueueItem(queItem);
         }
@@ -332,7 +332,7 @@ HRESULT InitD3D(HWND hWnd)
             std::string work;
             work = "ƒAƒCƒeƒ€‚a‚a‚a4";
             queItem.SetName(work);
-            queItem.SetDateReq(1, 2, 3, 4, 5, 6);
+            queItem.SetDateReq(11111, 2, 3, 4, 5, 6);
             queItem.SetResult("–¢ŽÀŽ{");
             menu.AddQueueItem(queItem);
         }
@@ -367,7 +367,7 @@ VOID Render()
             work2 = 0;
         }
 
-        menu.UpdateDateTime(work2, work2, work2, work2, work2, work2);
+        menu.UpdateDateTime(11111, work2, work2, work2, work2, work2);
     }
 
     if (NULL == g_pd3dDevice)
