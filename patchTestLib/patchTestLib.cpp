@@ -41,6 +41,12 @@ void NSPatchTestLib::PatchTestLib::AddQueueItem(const QueuedTestItem& arg)
     m_rightList.push_back(arg);
 }
 
+void NSPatchTestLib::PatchTestLib::ClearAll()
+{
+    m_leftList.clear();
+    m_rightList.clear();
+}
+
 void NSPatchTestLib::PatchTestLib::MoveFromInventoryToQueue(const int id, const int subid,
                                                             const int year,
                                                             const int month,

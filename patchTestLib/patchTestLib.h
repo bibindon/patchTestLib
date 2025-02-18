@@ -159,6 +159,8 @@ public:
     void AddTestItem(const TestItem& arg);
     void AddQueueItem(const QueuedTestItem& arg);
 
+    void ClearAll();
+
     void MoveFromInventoryToQueue(const int id, const int subid,
                                   const int year,
                                   const int month,
