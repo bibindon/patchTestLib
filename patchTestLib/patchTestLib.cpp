@@ -536,13 +536,14 @@ void PatchTestLib::CursorOn(const int x, const int y)
 std::string PatchTestLib::Click(const int x, const int y)
 {
     std::string result;
+    int previousCursor = m_leftCursor;
+    int previousSelect = m_leftSelect;
+
     if (m_eFocus == eFocus::LEFT)
     {
         if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
         {
-            int previousCursor = m_leftCursor;
-            int previousSelect = m_leftSelect;
-
+            bool outOfRange = false;
             if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + PANEL_HEIGHT * 1)
             {
                 m_leftCursor = 0;
@@ -593,17 +594,23 @@ std::string PatchTestLib::Click(const int x, const int y)
                 m_leftCursor = 9;
                 m_leftSelect = 9 + m_leftBegin;
             }
+            else
+            {
+                outOfRange = true;
+            }
 
-            if ((size_t)m_leftSelect >= m_leftList.size())
+            if (0 <= m_leftSelect && (size_t)m_leftSelect < m_leftList.size())
+            {
+                if (!outOfRange)
+                {
+                    m_SE->PlayClick();
+                    result = Into();
+                }
+            }
+            else
             {
                 m_leftCursor = previousCursor;
                 m_leftSelect = previousSelect;
-            }
-
-            if (m_leftSelect != previousSelect)
-            {
-                m_SE->PlayClick();
-                result = Into();
             }
         }
     }
