@@ -760,6 +760,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
             if ((size_t)m_leftSelect >= m_leftList.size())
             {
                 m_leftSelect = m_leftList.size() - 1;
+                --m_leftCursor;
             }
         }
     }
@@ -774,6 +775,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
             if ((size_t)m_rightSelect >= m_rightList.size())
             {
                 m_rightSelect = m_rightList.size() - 1;
+                --m_rightSelect;
             }
         }
     }
