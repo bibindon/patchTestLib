@@ -582,7 +582,7 @@ void PatchTestLib::Draw()
     {
         for (int i = m_rightBegin; i < m_rightBegin + PANEL_ROW_MAX; ++i)
         {
-            int work = (m_rightList.size() - 1) - i;
+            int work = ((int)m_rightList.size() - 1) - i;
 
             int work2 = (i - m_rightBegin);
 
@@ -609,28 +609,28 @@ void PatchTestLib::Draw()
     }
     else
     {
-        for (size_t i = 0; i < m_rightList.size(); ++i)
+        for (int i = 0; i < (int)m_rightList.size(); ++i)
         {
-            int work = (m_rightList.size() - 1) - i;
+            int work = ((int)m_rightList.size() - 1) - i;
             m_font->DrawText_(m_rightList.at(work).GetName(),
                               RIGHT_PANEL_STARTX,
-                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+                              RIGHT_PANEL_STARTY + (i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetResult(),
                               RIGHT_PANEL_STARTX + 300,
-                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+                              RIGHT_PANEL_STARTY + (i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateReqStr(),
                               RIGHT_PANEL_STARTX + 470,
-                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+                              RIGHT_PANEL_STARTY + (i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateStartStr(),
                               RIGHT_PANEL_STARTX + 700,
-                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+                              RIGHT_PANEL_STARTY + (i * PANEL_HEIGHT));
 
             m_font->DrawText_(m_rightList.at(work).GetDateEndStr(),
                               RIGHT_PANEL_STARTX + 930,
-                              RIGHT_PANEL_STARTY + ((int)i * PANEL_HEIGHT));
+                              RIGHT_PANEL_STARTY + (i * PANEL_HEIGHT));
 
         }
     }
@@ -669,7 +669,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
         {
             if ((size_t)m_leftSelect >= m_leftList.size())
             {
-                m_leftSelect = m_leftList.size() - 1;
+                m_leftSelect = (int)m_leftList.size() - 1;
                 --m_leftCursor;
             }
         }
@@ -684,7 +684,7 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
         {
             if ((size_t)m_rightSelect >= m_rightList.size())
             {
-                m_rightSelect = m_rightList.size() - 1;
+                m_rightSelect = (int)m_rightList.size() - 1;
                 --m_rightSelect;
             }
         }
