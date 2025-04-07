@@ -24,6 +24,9 @@
   <ItemGroup>
     <ClInclude Include="patchTestLib.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
