@@ -33,6 +33,7 @@ void PatchTestLib::Init(IFont* font,
     m_bEnglish = bEnglish;
 
     m_font->Init(m_bEnglish);
+    m_SE->Init();
 }
 
 void NSPatchTestLib::PatchTestLib::Finalize()
