@@ -22,13 +22,17 @@ void PatchTestLib::Init(IFont* font,
                         ISoundEffect* SE,
                         ISprite* sprCursor,
                         ISprite* sprBackground,
-                        ISprite* sprVBar)
+                        ISprite* sprVBar,
+                        const bool bEnglish)
 {
     m_font = font;
     m_SE = SE;
     m_sprCursor = sprCursor;
     m_sprBackground = sprBackground;
     m_sprVBar = sprVBar;
+    m_bEnglish = bEnglish;
+
+    m_font->Init(m_bEnglish);
 }
 
 void NSPatchTestLib::PatchTestLib::Finalize()
@@ -540,21 +544,40 @@ void PatchTestLib::Draw()
     m_sprVBar->DrawImage(350, 150);
 
     // 上部分の左に「インベントリ」、右側に「倉庫」と表示する
-    m_font->DrawText_("食材リスト", 125, 80);
 
-    m_font->DrawText_("食材名", 155, 160, 64);
-
-    m_font->DrawText_("テスト状況", 855, 80);
-
-    m_font->DrawText_("現在日時", 1155, 80, 64);
+    if (!m_bEnglish)
+    {
+        m_font->DrawText_("食材リスト", 125, 80);
+        m_font->DrawText_("食材名", 155, 160, 64);
+        m_font->DrawText_("テスト状況", 855, 80);
+        m_font->DrawText_("現在日時", 1155, 80, 64);
+    }
+    else
+    {
+        m_font->DrawText_("Ingredient List", 125, 80);
+        m_font->DrawText_("Ingredient Name", 155, 160, 64);
+        m_font->DrawText_("Test Status", 855, 80);
+        m_font->DrawText_("Date/Time", 1155, 80, 64);
+    }
 
     m_font->DrawText_(m_CurrentDateTime, 1300, 80, 64);
 
-    m_font->DrawText_("食材名", 455, 160, 64);
-    m_font->DrawText_("テスト状況", 700, 160, 64);
-    m_font->DrawText_("依頼日", 870, 160, 64);
-    m_font->DrawText_("開始日", 1100, 160, 64);
-    m_font->DrawText_("完了日", 1330, 160, 64);
+    if (!m_bEnglish)
+    {
+        m_font->DrawText_("食材名", 455, 160, 64);
+        m_font->DrawText_("テスト状況", 700, 160, 64);
+        m_font->DrawText_("依頼日", 870, 160, 64);
+        m_font->DrawText_("開始日", 1100, 160, 64);
+        m_font->DrawText_("完了日", 1330, 160, 64);
+    }
+    else
+    {
+        m_font->DrawText_("Name", 455, 160, 64);
+        m_font->DrawText_("Status", 700, 160, 64);
+        m_font->DrawText_("Request", 870, 160, 64);
+        m_font->DrawText_("Start", 1100, 160, 64);
+        m_font->DrawText_("End", 1330, 160, 64);
+    }
 
     // 左の列のインベントリを表示
     if ((int)m_leftList.size() >= PANEL_ROW_MAX)

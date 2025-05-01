@@ -23,7 +23,7 @@ public:
                            const int x,
                            const int y,
                            const int transparent = 255) = 0;
-    virtual void Init() = 0;
+    virtual void Init(const bool bEnglish) = 0;
     virtual ~IFont() {};
 };
 
@@ -154,7 +154,8 @@ public:
               ISoundEffect* SE,
               ISprite* sprCursor,
               ISprite* sprBackground,
-              ISprite* sprVBar);
+              ISprite* sprVBar,
+              const bool bEnglish);
 
     void Finalize();
 
@@ -273,6 +274,8 @@ private:
     int m_rightBegin = 0;
 
     std::string m_CurrentDateTime;
+
+    bool m_bEnglish = false;
 };
 }
 
