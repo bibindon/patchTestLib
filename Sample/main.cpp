@@ -1,4 +1,4 @@
-#pragma comment( lib, "d3d9.lib" )
+ï»¿#pragma comment( lib, "d3d9.lib" )
 #if defined(NDEBUG)
 #pragma comment( lib, "d3dx9.lib" )
 #else
@@ -111,7 +111,7 @@ public:
                                         OUT_TT_ONLY_PRECIS,
                                         ANTIALIASED_QUALITY,
                                         FF_DONTCARE,
-                                        "‚l‚r –¾’©",
+                                        "ï¼­ï¼³ æ˜æœ",
                                         &m_pFont);
         }
         else
@@ -231,7 +231,7 @@ HRESULT InitD3D(HWND hWnd)
         OUT_TT_ONLY_PRECIS,
         ANTIALIASED_QUALITY,
         FF_DONTCARE,
-        "‚l‚r ƒSƒVƒbƒN",
+        "ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯",
         &g_pFont);
     if FAILED(hr)
     {
@@ -244,7 +244,7 @@ HRESULT InitD3D(HWND hWnd)
         g_pd3dDevice, NULL, &pD3DXMtrlBuffer, NULL,
         &dwNumMaterials, &pMesh)))
     {
-        MessageBox(NULL, "Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½", NULL, MB_OK);
+        MessageBox(NULL, "Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ", NULL, MB_OK);
         return E_FAIL;
     }
     d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
@@ -263,7 +263,7 @@ HRESULT InitD3D(HWND hWnd)
                 d3dxMaterials[i].pTextureFilename,
                 &pTextures[i])))
             {
-                MessageBox(NULL, "ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½", NULL, MB_OK);
+                MessageBox(NULL, "ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ", NULL, MB_OK);
             }
         }
     }
@@ -303,7 +303,7 @@ HRESULT InitD3D(HWND hWnd)
             testItem.SetId(1);
             testItem.SetSubId(1);
             std::string work;
-            work = "ƒAƒCƒeƒ€‚`‚`‚`" + std::to_string(i);
+            work = "ã‚¢ã‚¤ãƒ†ãƒ ï¼¡ï¼¡ï¼¡" + std::to_string(i);
             testItem.SetName(work);
             menu.AddTestItem(testItem);
         }
@@ -311,45 +311,45 @@ HRESULT InitD3D(HWND hWnd)
         {
             QueuedTestItem queItem;
             std::string work;
-            work = "ƒAƒCƒeƒ€‚a‚a‚a1";
+            work = "ã‚¢ã‚¤ãƒ†ãƒ ï¼¢ï¼¢ï¼¢1";
             queItem.SetName(work);
             queItem.SetDateReq(11111, 2, 3, 4, 5, 12);
             queItem.SetDateStart(11111, 2, 3, 4, 5, 13);
             queItem.SetDateEnd(11111, 2, 3, 4, 5, 14);
-            queItem.SetResult("“Å");
+            queItem.SetResult("æ¯’");
             menu.AddQueueItem(queItem);
         }
 
         {
             QueuedTestItem queItem;
             std::string work;
-            work = "ƒAƒCƒeƒ€‚a‚a‚a2";
+            work = "ã‚¢ã‚¤ãƒ†ãƒ ï¼¢ï¼¢ï¼¢2";
             queItem.SetName(work);
             queItem.SetDateReq(11111, 2, 3, 4, 5, 9);
             queItem.SetDateStart(11111, 2, 3, 4, 5, 10);
             queItem.SetDateEnd(11111, 2, 3, 4, 5, 11);
-            queItem.SetResult("“Å‚Å‚Í‚È‚¢");
+            queItem.SetResult("æ¯’ã§ã¯ãªã„");
             menu.AddQueueItem(queItem);
         }
 
         {
             QueuedTestItem queItem;
             std::string work;
-            work = "ƒAƒCƒeƒ€‚a‚a‚a3";
+            work = "ã‚¢ã‚¤ãƒ†ãƒ ï¼¢ï¼¢ï¼¢3";
             queItem.SetName(work);
             queItem.SetDateReq(11111, 2, 3, 4, 5, 7);
             queItem.SetDateStart(11111, 2, 3, 4, 5, 8);
-            queItem.SetResult("ƒeƒXƒg’†");
+            queItem.SetResult("ãƒ†ã‚¹ãƒˆä¸­");
             menu.AddQueueItem(queItem);
         }
 
         {
             QueuedTestItem queItem;
             std::string work;
-            work = "ƒAƒCƒeƒ€‚a‚a‚a4";
+            work = "ã‚¢ã‚¤ãƒ†ãƒ ï¼¢ï¼¢ï¼¢4";
             queItem.SetName(work);
             queItem.SetDateReq(11111, 2, 3, 4, 5, 6);
-            queItem.SetResult("–¢À{");
+            queItem.SetResult("æœªå®Ÿæ–½");
             menu.AddQueueItem(queItem);
         }
     }
@@ -409,7 +409,7 @@ VOID Render()
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
         char msg[128];
-        strcpy_s(msg, 128, "CƒL[‚ÅƒNƒ‰ƒtƒg‰æ–Ê‚ğ•\¦");
+        strcpy_s(msg, 128, "Cã‚­ãƒ¼ã§ã‚¯ãƒ©ãƒ•ãƒˆç”»é¢ã‚’è¡¨ç¤º");
         TextDraw(g_pFont, msg, 0, 0);
 
         pEffect->SetTechnique("BasicTec");
@@ -460,7 +460,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 bShowMenu = false;
             }
             break;
-        // ƒƒjƒ…[‚ğ•\¦‚µ‚Ä‚¢‚éÅ’†‚Éƒƒjƒ…[‚É•\¦‚³‚ê‚Ä‚¢‚é“à—e‚ğ•Ï‚¦‚é
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤ºã—ã¦ã„ã‚‹æœ€ä¸­ã«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«è¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹å†…å®¹ã‚’å¤‰ãˆã‚‹
         case VK_F2:
         {
             // menu.SetItem(itemInfoList);
@@ -480,11 +480,11 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case VK_RETURN:
         {
             std::string result = menu.Into();
-            if (result == "ƒ^ƒCƒgƒ‹")
+            if (result == "ã‚¿ã‚¤ãƒˆãƒ«")
             {
                 bShowMenu = false;
             }
-            else if (result == "Å‰‚©‚ç")
+            else if (result == "æœ€åˆã‹ã‚‰")
             {
                 bShowMenu = false;
             }

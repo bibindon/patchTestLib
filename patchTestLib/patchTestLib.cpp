@@ -1,4 +1,4 @@
-#include "PatchTestLib.h"
+ï»¿#include "PatchTestLib.h"
 #include <sstream>
 #include <algorithm>
 
@@ -143,8 +143,8 @@ std::string PatchTestLib::Up()
             m_leftSelect--;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ôã‚É‚ ‚é‚Æ‚«‚Éãƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ª‰º‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸Šã«ã‚ã‚‹ã¨ãã«ä¸Šãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸‹ã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != 0)
             {
                 m_leftCursor--;
@@ -166,8 +166,8 @@ std::string PatchTestLib::Up()
             m_rightSelect--;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ôã‚É‚ ‚é‚Æ‚«‚Éãƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ª‰º‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸Šã«ã‚ã‚‹ã¨ãã«ä¸Šãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸‹ã«ç§»å‹•ã™ã‚‹
             if (m_rightCursor != 0)
             {
                 m_rightCursor--;
@@ -194,8 +194,8 @@ std::string PatchTestLib::Down()
             m_leftSelect++;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ô‰º‚É‚ ‚é‚Æ‚«‚É‰ºƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ªã‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸‹ã«ã‚ã‚‹ã¨ãã«ä¸‹ãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸Šã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != PANEL_ROW_MAX - 1)
             {
                 m_leftCursor++;
@@ -217,8 +217,8 @@ std::string PatchTestLib::Down()
             m_rightSelect++;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ô‰º‚É‚ ‚é‚Æ‚«‚É‰ºƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ªã‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸‹ã«ã‚ã‚‹ã¨ãã«ä¸‹ãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸Šã«ç§»å‹•ã™ã‚‹
             if (m_rightCursor != PANEL_ROW_MAX - 1)
             {
                 m_rightCursor++;
@@ -538,20 +538,20 @@ std::string PatchTestLib::Click(const int x, const int y)
 
 void PatchTestLib::Draw()
 {
-    // ”wŒi
+    // èƒŒæ™¯
     m_sprBackground->DrawImage(0, 0);
 
-    // cü
+    // ç¸¦ç·š
     m_sprVBar->DrawImage(350, 150);
 
-    // ã•”•ª‚Ì¶‚ÉuƒCƒ“ƒxƒ“ƒgƒŠvA‰E‘¤‚Éu‘qŒÉv‚Æ•\Ž¦‚·‚é
+    // ä¸Šéƒ¨åˆ†ã®å·¦ã«ã€Œã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã€ã€å³å´ã«ã€Œå€‰åº«ã€ã¨è¡¨ç¤ºã™ã‚‹
 
     if (!m_bEnglish)
     {
-        m_font->DrawText_("HÞƒŠƒXƒg", 125, 80);
-        m_font->DrawText_("HÞ–¼", 155, 160, 64);
-        m_font->DrawText_("ƒeƒXƒgó‹µ", 855, 80);
-        m_font->DrawText_("Œ»Ý“úŽž", 1155, 80, 64);
+        m_font->DrawText_("é£Ÿæãƒªã‚¹ãƒˆ", 125, 80);
+        m_font->DrawText_("é£Ÿæå", 155, 160, 64);
+        m_font->DrawText_("ãƒ†ã‚¹ãƒˆçŠ¶æ³", 855, 80);
+        m_font->DrawText_("ç¾åœ¨æ—¥æ™‚", 1155, 80, 64);
     }
     else
     {
@@ -565,11 +565,11 @@ void PatchTestLib::Draw()
 
     if (!m_bEnglish)
     {
-        m_font->DrawText_("HÞ–¼", 455, 160, 64);
-        m_font->DrawText_("ƒeƒXƒgó‹µ", 700, 160, 64);
-        m_font->DrawText_("ˆË—Š“ú", 870, 160, 64);
-        m_font->DrawText_("ŠJŽn“ú", 1100, 160, 64);
-        m_font->DrawText_("Š®—¹“ú", 1330, 160, 64);
+        m_font->DrawText_("é£Ÿæå", 455, 160, 64);
+        m_font->DrawText_("ãƒ†ã‚¹ãƒˆçŠ¶æ³", 700, 160, 64);
+        m_font->DrawText_("ä¾é ¼æ—¥", 870, 160, 64);
+        m_font->DrawText_("é–‹å§‹æ—¥", 1100, 160, 64);
+        m_font->DrawText_("å®Œäº†æ—¥", 1330, 160, 64);
     }
     else
     {
@@ -580,7 +580,7 @@ void PatchTestLib::Draw()
         m_font->DrawText_("End", 1330, 160, 64);
     }
 
-    // ¶‚Ì—ñ‚ÌƒCƒ“ƒxƒ“ƒgƒŠ‚ð•\Ž¦
+    // å·¦ã®åˆ—ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã‚’è¡¨ç¤º
     if ((int)m_leftList.size() >= PANEL_ROW_MAX)
     {
         for (int i = m_leftBegin; i < m_leftBegin + PANEL_ROW_MAX; ++i)
@@ -600,8 +600,8 @@ void PatchTestLib::Draw()
         }
     }
 
-    // ‰E‚Ì—ñ‚ÉƒeƒXƒgó‹µ‚ð•\Ž¦
-    // ––”ö‚Ì—v‘f‚ªˆê”Ôã‚É•\Ž¦‚³‚ê‚é
+    // å³ã®åˆ—ã«ãƒ†ã‚¹ãƒˆçŠ¶æ³ã‚’è¡¨ç¤º
+    // æœ«å°¾ã®è¦ç´ ãŒä¸€ç•ªä¸Šã«è¡¨ç¤ºã•ã‚Œã‚‹
     if ((int)m_rightList.size() >= PANEL_ROW_MAX)
     {
         for (int i = m_rightBegin; i < m_rightBegin + PANEL_ROW_MAX; ++i)
@@ -659,7 +659,7 @@ void PatchTestLib::Draw()
         }
     }
 
-    // ƒJ[ƒ\ƒ‹‚Ì•\Ž¦
+    // ã‚«ãƒ¼ã‚½ãƒ«ã®è¡¨ç¤º
     if (m_eFocus == eFocus::LEFT)
     {
         if (m_leftCursor != -1)
@@ -680,8 +680,8 @@ void PatchTestLib::Draw()
 
 void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
 {
-    // ƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ª”ÍˆÍŠO‚È‚ç”ÍˆÍ“à‚ÉŽû‚Ü‚é‚æ‚¤‚ÉˆÚ“®‚·‚éB
-    // ƒŠƒXƒg‚ª‹ó‚Ìê‡‚ÍA-1‚ðƒZƒbƒg‚·‚é
+    // ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®ãŒç¯„å›²å¤–ãªã‚‰ç¯„å›²å†…ã«åŽã¾ã‚‹ã‚ˆã†ã«ç§»å‹•ã™ã‚‹ã€‚
+    // ãƒªã‚¹ãƒˆãŒç©ºã®å ´åˆã¯ã€-1ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 
     if (m_eFocus == eFocus::LEFT)
     {
@@ -873,7 +873,7 @@ std::string NSPatchTestLib::CreateDateTimeStr(const int y, const int M, const in
 
     work += std::to_string(y) + "/";
 
-    // ˆêŒ…”Žš‚¾‚Á‚½‚ç“ñŒ…•¶Žš‚É‚·‚é
+    // ä¸€æ¡æ•°å­—ã ã£ãŸã‚‰äºŒæ¡æ–‡å­—ã«ã™ã‚‹
     if (M <= 9)
     {
         work += "0" + std::to_string(M) + "/";
