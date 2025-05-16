@@ -1,14 +1,15 @@
 ﻿#include "PatchTestLib.h"
 #include <sstream>
 #include <algorithm>
+#include <tchar.h>
 
 using namespace NSPatchTestLib;
 
-static std::vector<std::string> split(const std::string& s, char delim)
+static std::vector<std::wstring> split(const std::wstring& s, wchar_t delim)
 {
-    std::vector<std::string> result;
-    std::stringstream ss(s);
-    std::string item;
+    std::vector<std::wstring> result;
+    std::wstringstream ss(s);
+    std::wstring item;
 
     while (getline(ss, item, delim))
     {
@@ -112,7 +113,7 @@ void NSPatchTestLib::PatchTestLib::UpdateQueueItemStatus(const int index,
                                                          const int hourEnd,
                                                          const int minuteEnd,
                                                          const int secondEnd,
-                                                         const std::string& result)
+                                                         const std::wstring& result)
 {
     m_rightList.at(index).SetDateStart(yearStart, monthStart, dayStart,
                                        hourStart, minuteStart, secondStart);
@@ -133,7 +134,7 @@ void NSPatchTestLib::PatchTestLib::UpdateDateTime(const int year,
     m_CurrentDateTime = CreateDateTimeStr(year, month, day, hour, minute, second);
 }
 
-std::string PatchTestLib::Up()
+std::wstring PatchTestLib::Up()
 {
     if (m_eFocus == eFocus::LEFT)
     {
@@ -181,10 +182,10 @@ std::string PatchTestLib::Up()
             }
         }
     }
-    return "";
+    return _T("");
 }
 
-std::string PatchTestLib::Down()
+std::wstring PatchTestLib::Down()
 {
     if (m_eFocus == eFocus::LEFT)
     {
@@ -232,59 +233,59 @@ std::string PatchTestLib::Down()
             }
         }
     }
-    return "";
+    return _T("");
 }
 
-std::string PatchTestLib::Right()
+std::wstring PatchTestLib::Right()
 {
     if (m_eFocus == eFocus::LEFT)
     {
         m_eFocus = eFocus::RIGHT;
         m_SE->PlayMove();
     }
-    return std::string();
+    return std::wstring();
 }
 
-std::string PatchTestLib::Left()
+std::wstring PatchTestLib::Left()
 {
     if (m_eFocus == eFocus::RIGHT)
     {
         m_eFocus = eFocus::LEFT;
         m_SE->PlayMove();
     }
-    return std::string();
+    return std::wstring();
 }
 
-std::string PatchTestLib::Into()
+std::wstring PatchTestLib::Into()
 {
-    std::string result;
+    std::wstring result;
     if (m_eFocus == eFocus::LEFT)
     {
-        result = "left:";
+        result = _T("left:");
         result += m_leftList.at(m_leftSelect).GetName();
-        result += ":" + std::to_string(m_leftList.at(m_leftSelect).GetId());
-        result += ":" + std::to_string(m_leftList.at(m_leftSelect).GetSubId());
+        result += _T(":") + std::to_wstring(m_leftList.at(m_leftSelect).GetId());
+        result += _T(":") + std::to_wstring(m_leftList.at(m_leftSelect).GetSubId());
         m_SE->PlayClick();
     }
 
     return result;
 }
 
-std::string PatchTestLib::Back()
+std::wstring PatchTestLib::Back()
 {
-    std::string result;
-    result = "EXIT";
+    std::wstring result;
+    result = _T("EXIT");
     m_SE->PlayBack();
 
     return result;
 }
 
-std::string NSPatchTestLib::PatchTestLib::Next()
+std::wstring NSPatchTestLib::PatchTestLib::Next()
 {
     return Down();
 }
 
-std::string NSPatchTestLib::PatchTestLib::Previous()
+std::wstring NSPatchTestLib::PatchTestLib::Previous()
 {
     return Up();
 }
@@ -448,9 +449,9 @@ void PatchTestLib::CursorOn(const int x, const int y)
     }
 }
 
-std::string PatchTestLib::Click(const int x, const int y)
+std::wstring PatchTestLib::Click(const int x, const int y)
 {
-    std::string result;
+    std::wstring result;
     int previousCursor = m_leftCursor;
     int previousSelect = m_leftSelect;
 
@@ -548,36 +549,36 @@ void PatchTestLib::Draw()
 
     if (!m_bEnglish)
     {
-        m_font->DrawText_("食材リスト", 125, 80);
-        m_font->DrawText_("食材名", 155, 160, 64);
-        m_font->DrawText_("テスト状況", 855, 80);
-        m_font->DrawText_("現在日時", 1155, 80, 64);
+        m_font->DrawText_(_T("食材リスト"), 125, 80);
+        m_font->DrawText_(_T("食材名"), 155, 160, 64);
+        m_font->DrawText_(_T("テスト状況"), 855, 80);
+        m_font->DrawText_(_T("現在日時"), 1155, 80, 64);
     }
     else
     {
-        m_font->DrawText_("Ingredient List", 125, 80);
-        m_font->DrawText_("Ingredient Name", 155, 160, 64);
-        m_font->DrawText_("Test Status", 855, 80);
-        m_font->DrawText_("Date/Time", 1155, 80, 64);
+        m_font->DrawText_(_T("Ingredient List"), 125, 80);
+        m_font->DrawText_(_T("Ingredient Name"), 155, 160, 64);
+        m_font->DrawText_(_T("Test Status"), 855, 80);
+        m_font->DrawText_(_T("Date/Time"), 1155, 80, 64);
     }
 
     m_font->DrawText_(m_CurrentDateTime, 1300, 80, 64);
 
     if (!m_bEnglish)
     {
-        m_font->DrawText_("食材名", 455, 160, 64);
-        m_font->DrawText_("テスト状況", 700, 160, 64);
-        m_font->DrawText_("依頼日", 870, 160, 64);
-        m_font->DrawText_("開始日", 1100, 160, 64);
-        m_font->DrawText_("完了日", 1330, 160, 64);
+        m_font->DrawText_(_T("食材名"), 455, 160, 64);
+        m_font->DrawText_(_T("テスト状況"), 700, 160, 64);
+        m_font->DrawText_(_T("依頼日"), 870, 160, 64);
+        m_font->DrawText_(_T("開始日"), 1100, 160, 64);
+        m_font->DrawText_(_T("完了日"), 1330, 160, 64);
     }
     else
     {
-        m_font->DrawText_("Name", 455, 160, 64);
-        m_font->DrawText_("Status", 700, 160, 64);
-        m_font->DrawText_("Request", 870, 160, 64);
-        m_font->DrawText_("Start", 1100, 160, 64);
-        m_font->DrawText_("End", 1330, 160, 64);
+        m_font->DrawText_(_T("Name"), 455, 160, 64);
+        m_font->DrawText_(_T("Status"), 700, 160, 64);
+        m_font->DrawText_(_T("Request"), 870, 160, 64);
+        m_font->DrawText_(_T("Start"), 1100, 160, 64);
+        m_font->DrawText_(_T("End"), 1330, 160, 64);
     }
 
     // 左の列のインベントリを表示
@@ -735,22 +736,22 @@ int NSPatchTestLib::TestItem::GetSubId() const
     return m_idSub;
 }
 
-void NSPatchTestLib::TestItem::SetName(const std::string& arg)
+void NSPatchTestLib::TestItem::SetName(const std::wstring& arg)
 {
     m_name = arg;
 }
 
-std::string NSPatchTestLib::TestItem::GetName() const
+std::wstring NSPatchTestLib::TestItem::GetName() const
 {
     return m_name;
 }
 
-void NSPatchTestLib::QueuedTestItem::SetName(const std::string& arg)
+void NSPatchTestLib::QueuedTestItem::SetName(const std::wstring& arg)
 {
     m_name = arg;
 }
 
-std::string NSPatchTestLib::QueuedTestItem::GetName() const
+std::wstring NSPatchTestLib::QueuedTestItem::GetName() const
 {
     return m_name;
 }
@@ -777,7 +778,7 @@ void NSPatchTestLib::QueuedTestItem::GetDateReq(int* year, int* month, int* day,
     *second = m_reqSecond;
 }
 
-std::string NSPatchTestLib::QueuedTestItem::GetDateReqStr()
+std::wstring NSPatchTestLib::QueuedTestItem::GetDateReqStr()
 {
     return CreateDateTimeStr(m_reqYear,
                              m_reqMonth,
@@ -809,7 +810,7 @@ void NSPatchTestLib::QueuedTestItem::GetDateStart(int* year, int* month, int* da
     *second = m_startSecond;
 }
 
-std::string NSPatchTestLib::QueuedTestItem::GetDateStartStr()
+std::wstring NSPatchTestLib::QueuedTestItem::GetDateStartStr()
 {
     return CreateDateTimeStr(m_startYear,
                              m_startMonth,
@@ -841,7 +842,7 @@ void NSPatchTestLib::QueuedTestItem::GetDateEnd(int* year, int* month, int* day,
     *second = m_endSecond;
 }
 
-std::string NSPatchTestLib::QueuedTestItem::GetDateEndStr()
+std::wstring NSPatchTestLib::QueuedTestItem::GetDateEndStr()
 {
     return CreateDateTimeStr(m_endYear,
                              m_endMonth,
@@ -851,73 +852,73 @@ std::string NSPatchTestLib::QueuedTestItem::GetDateEndStr()
                              m_endSecond);
 }
 
-void NSPatchTestLib::QueuedTestItem::SetResult(const std::string& arg)
+void NSPatchTestLib::QueuedTestItem::SetResult(const std::wstring& arg)
 {
     m_result = arg;
 }
 
-std::string NSPatchTestLib::QueuedTestItem::GetResult() const
+std::wstring NSPatchTestLib::QueuedTestItem::GetResult() const
 {
     return m_result;
 }
 
-std::string NSPatchTestLib::CreateDateTimeStr(const int y, const int M, const int d, const int h, const int m, const int s)
+std::wstring NSPatchTestLib::CreateDateTimeStr(const int y, const int M, const int d, const int h, const int m, const int s)
 {
     if (y == 0)
     {
-        return std::string();
+        return std::wstring();
     }
 
-    std::string work;
-    std::string work2;
+    std::wstring work;
+    std::wstring work2;
 
-    work += std::to_string(y) + "/";
+    work += std::to_wstring(y) + _T("/");
 
     // 一桁数字だったら二桁文字にする
     if (M <= 9)
     {
-        work += "0" + std::to_string(M) + "/";
+        work += _T("0") + std::to_wstring(M) + _T("/");
     }
     else
     {
-        work += std::to_string(M) + "/";
+        work += std::to_wstring(M) + _T("/");
     }
 
     if (d <= 9)
     {
-        work += "0" + std::to_string(d) + " ";
+        work += _T("0") + std::to_wstring(d) + _T(" ");
     }
     else
     {
-        work += std::to_string(d) + " ";
+        work += std::to_wstring(d) + _T(" ");
     }
 
     if (h <= 9)
     {
-        work += "0" + std::to_string(h) + ":";
+        work += _T("0") + std::to_wstring(h) + _T(":");
     }
     else
     {
-        work += std::to_string(h) + ":";
+        work += std::to_wstring(h) + _T(":");
     }
 
     if (m <= 9)
     {
-        work += "0" + std::to_string(m) + ":";
+        work += _T("0") + std::to_wstring(m) + _T(":");
     }
     else
     {
-        work += std::to_string(m) + ":";
+        work += std::to_wstring(m) + _T(":");
     }
 
     if (s <= 9)
     {
-        work += "0" + std::to_string(s);
+        work += _T("0") + std::to_wstring(s);
     }
     else
     {
 
-        work += std::to_string(s);
+        work += std::to_wstring(s);
     }
 
     return work;

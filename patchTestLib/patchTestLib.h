@@ -12,14 +12,14 @@ class ISprite
 {
 public:
     virtual void DrawImage(const int x, const int y, const int transparency = 255) = 0;
-    virtual void Load(const std::string& filepath) = 0;
+    virtual void Load(const std::wstring& filepath) = 0;
     virtual ~ISprite() {};
 };
 
 class IFont
 {
 public:
-    virtual void DrawText_(const std::string& msg,
+    virtual void DrawText_(const std::wstring& msg,
                            const int x,
                            const int y,
                            const int transparent = 255) = 0;
@@ -37,7 +37,7 @@ public:
     virtual ~ISoundEffect() {};
 };
 
-std::string CreateDateTimeStr(const int y, const int M, const int d,
+std::wstring CreateDateTimeStr(const int y, const int M, const int d,
                               const int h, const int m, const int s);
 
 class TestItem
@@ -49,22 +49,22 @@ public:
     void SetSubId(const int arg);
     int GetSubId() const;
 
-    void SetName(const std::string& arg);
-    std::string GetName() const;
+    void SetName(const std::wstring& arg);
+    std::wstring GetName() const;
 
 private:
 
     int m_id = 0;
     int m_idSub = 0;
-    std::string m_name;
+    std::wstring m_name;
 };
 
 class QueuedTestItem
 {
 public:
 
-    void SetName(const std::string& arg);
-    std::string GetName() const;
+    void SetName(const std::wstring& arg);
+    std::wstring GetName() const;
 
     void SetDateReq(const int year,
                     const int month,
@@ -80,7 +80,7 @@ public:
                     int* minute,
                     int* second);
 
-    std::string GetDateReqStr();
+    std::wstring GetDateReqStr();
 
     void SetDateStart(const int year,
                       const int month,
@@ -96,7 +96,7 @@ public:
                       int* minute,
                       int* second);
 
-    std::string GetDateStartStr();
+    std::wstring GetDateStartStr();
 
     void SetDateEnd(const int year,
                     const int month,
@@ -112,14 +112,14 @@ public:
                     int* minute,
                     int* second);
 
-    std::string GetDateEndStr();
+    std::wstring GetDateEndStr();
 
-    void SetResult(const std::string& arg);
-    std::string GetResult() const;
+    void SetResult(const std::wstring& arg);
+    std::wstring GetResult() const;
 
 private:
 
-    std::string m_name;
+    std::wstring m_name;
 
     int m_reqYear = 0;
     int m_reqMonth = 0;
@@ -142,7 +142,7 @@ private:
     int m_endMinute = 0;
     int m_endSecond = 0;
 
-    std::string m_result;
+    std::wstring m_result;
 
 };
 
@@ -186,7 +186,7 @@ public:
                                const int hourEnd,
                                const int minuteEnd,
                                const int secondEnd,
-                               const std::string& result
+                               const std::wstring& result
                                );
 
     void UpdateDateTime(const int year,
@@ -196,16 +196,16 @@ public:
                         const int minute,
                         const int second);
 
-    std::string Up();
-    std::string Down();
-    std::string Right();
-    std::string Left();
-    std::string Into();
-    std::string Back();
-    std::string Next();
-    std::string Previous();
+    std::wstring Up();
+    std::wstring Down();
+    std::wstring Right();
+    std::wstring Left();
+    std::wstring Into();
+    std::wstring Back();
+    std::wstring Next();
+    std::wstring Previous();
     void CursorOn(const int x, const int y);
-    std::string Click(const int x, const int y);
+    std::wstring Click(const int x, const int y);
     void Draw();
     void UpdateCursorPos();
 
@@ -273,7 +273,7 @@ private:
     // スクロール可能なので一番上に表示されるアイテムはスクロールすると変わる。
     int m_rightBegin = 0;
 
-    std::string m_CurrentDateTime;
+    std::wstring m_CurrentDateTime;
 
     bool m_bEnglish = false;
 };
