@@ -305,7 +305,7 @@ HRESULT InitD3D(HWND hWnd)
         for (int i = 0; i < 5; ++i)
         {
             TestItem testItem;
-            testItem.SetId(1);
+            testItem.SetId(L"itemAAA");
             testItem.SetSubId(1);
             std::wstring work;
             work = _T("アイテムＡＡＡ") + std::to_wstring(i);

@@ -71,7 +71,8 @@ void NSPatchTestLib::PatchTestLib::ClearAll()
     m_rightList.clear();
 }
 
-void NSPatchTestLib::PatchTestLib::MoveFromInventoryToQueue(const int id, const int subid,
+void NSPatchTestLib::PatchTestLib::MoveFromInventoryToQueue(const std::wstring& id,
+                                                            const int subid,
                                                             const int year,
                                                             const int month,
                                                             const int day,
@@ -263,7 +264,7 @@ std::wstring PatchTestLib::Into()
     {
         result = _T("left:");
         result += m_leftList.at(m_leftSelect).GetName();
-        result += _T(":") + std::to_wstring(m_leftList.at(m_leftSelect).GetId());
+        result += _T(":") + m_leftList.at(m_leftSelect).GetId();
         result += _T(":") + std::to_wstring(m_leftList.at(m_leftSelect).GetSubId());
         m_SE->PlayClick();
     }
@@ -716,12 +717,12 @@ void NSPatchTestLib::PatchTestLib::UpdateCursorPos()
     }
 }
 
-void NSPatchTestLib::TestItem::SetId(const int arg)
+void NSPatchTestLib::TestItem::SetId(const std::wstring& arg)
 {
     m_id = arg;
 }
 
-int NSPatchTestLib::TestItem::GetId() const
+std::wstring NSPatchTestLib::TestItem::GetId() const
 {
     return m_id;
 }

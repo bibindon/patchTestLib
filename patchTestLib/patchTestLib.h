@@ -43,8 +43,8 @@ std::wstring CreateDateTimeStr(const int y, const int M, const int d,
 class TestItem
 {
 public:
-    void SetId(const int arg);
-    int GetId() const;
+    void SetId(const std::wstring& arg);
+    std::wstring GetId() const;
 
     void SetSubId(const int arg);
     int GetSubId() const;
@@ -54,7 +54,7 @@ public:
 
 private:
 
-    int m_id = 0;
+    std::wstring m_id;
     int m_idSub = 0;
     std::wstring m_name;
 };
@@ -164,7 +164,8 @@ public:
 
     void ClearAll();
 
-    void MoveFromInventoryToQueue(const int id, const int subid,
+    void MoveFromInventoryToQueue(const std::wstring& id,
+                                  const int subid,
                                   const int year,
                                   const int month,
                                   const int day,
